@@ -43,12 +43,24 @@ Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        Dim years(5) As String
-        years(0) = "2015"
-        years(1) = "2016"
-        years(2) = "2017"
-        years(3) = "2018"
-        years(4) = "2019"
+        'Dim years(5) As String
+        Dim years(4) As String
+        '        years(0) = "2015"
+        years(0) = "2016"
+        years(1) = "2017"
+        years(2) = "2018"
+        years(3) = "2019"
+        'years(5) = "2020"
+
+        'years(0) = "2010"
+        'years(1) = "2011"
+        'years(2) = "2013"
+        'years(3) = "2015"
+        'years(4) = "2016"
+        'years(5) = "2017"
+        'years(6) = "2018"
+        'years(7) = "2019"
+
         Label2.Text = "Trabajando en ello..."
         'Create a new excel file
 
@@ -87,7 +99,8 @@ Public Class Form1
         Dim ssql As String
         Dim conexion = adoconectaExcel()
 
-        ssql = "SELECT * FROM [GH_CRND_" & year & "$]"
+        'ssql = "SELECT * FROM [GH_CRND_" & year & "$]"
+        ssql = "SELECT * FROM [GH_CHE_" & year & "$]"
 
         Dim cmd As New OleDbCommand(ssql, conexion)
         Dim lect As OleDbDataReader = cmd.ExecuteReader
@@ -95,52 +108,48 @@ Public Class Form1
 
         'Modifies excel file
 
-
         Dim xlsWorkSheet As Microsoft.Office.Interop.Excel.Worksheet
         Dim misValue As Object = System.Reflection.Missing.Value
-
 
         While lect.Read
 
             xlsWorkSheet = xlsWorkBook.Sheets("hoja1")
 
             If counter = 1 Then
-                xlsWorkSheet.Cells(counter, 1) = "CodigoPlanta"
-                xlsWorkSheet.Cells(counter, 2) = "FechaHora"
-                xlsWorkSheet.Cells(counter, 3) = "Potencia"
+                xlsWorkSheet.Cells(1, 1) = "CodigoPlanta"
+                xlsWorkSheet.Cells(1, 2) = "FechaHora"
+                xlsWorkSheet.Cells(1, 3) = "Potencia"
                 counter = counter + 1
-            Else
-                Dim columCounter = 1
+            End If
 
-                While columCounter <= 24
-                    'Dim mes As String = lect(0).Month
-                    'If mes.Length = 1 Then
-                    '    '   mes = "0" & mes
-                    'End If
-                    'Dim dia As String = lect(0).Day
-                    'If dia.Length = 1 Then
-                    '    '    dia = "0" & dia
-                    'End If
-                    'Dim año As Integer = lect(0).Year
-                    Dim hora As Integer = columCounter - 1
-                    If columCounter = 1 Then
-                        hora = 0
-                    End If
-                    'If hora.ToString.Length = 1 Then
-                    ' hora = "0" & hora
-                    ' End If
-                    'Dim fecha As String = dia & "/" & mes & "/" & año & " " & hora & ":00:00"
-                    ' fecha.AddHours(columCounter - 1)
-                    Dim fecha1 = CDate(lect(0))
+            Dim columCounter = 1
+
+            While columCounter <= 24
+
+                Dim hora As Integer = columCounter - 1
+                        If columCounter = 1 Then
+                            hora = 0
+                        End If
+                Dim fecha1 As Date
+                ' Si es el primer dia se asigna manual
+                If Not IsDBNull(lect(0)) Then
+                    fecha1 = CDate(lect(0))
                     Dim fecha As DateTime = New DateTime(fecha1.Year, fecha1.Month, fecha1.Day, hora, 0, 0, 0)
                     xlsWorkSheet.Cells(counter, 1) = txtCodPlanta.Text
                     xlsWorkSheet.Cells(counter, 2) = fecha
                     xlsWorkSheet.Cells(counter, 3) = lect(columCounter)
-                    columCounter = columCounter + 1
+
                     Label2.Text = counter & " filas escritas"
                     counter = counter + 1
-                End While
-            End If
+                Else
+                    fecha1 = CDate("01/01/" & year)
+                End If
+
+                columCounter = columCounter + 1
+
+            End While
+
+            '            counter = counter + 1
 
 
         End While

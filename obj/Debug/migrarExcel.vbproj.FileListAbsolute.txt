@@ -21,3 +21,7 @@ C:\Users\Josue\desktop\migrarExcel\bin\Debug\Microsoft.WindowsAPICodePack.ShellE
 C:\Users\Josue\desktop\migrarExcel\bin\Debug\Microsoft.WindowsAPICodePack.ShellExtensions.xml
 C:\Users\Josue\desktop\migrarExcel\obj\Debug\migrarExcel.vbproj.CopyComplete
 C:\Users\Josue\desktop\migrarExcel\obj\Debug\migrarExcel.vbproj.ResolveComReference.cache
+C:\Users\Josue\desktop\migrarExcel\bin\Debug\migrarExcel.exe.manifest
+C:\Users\Josue\desktop\migrarExcel\bin\Debug\migrarExcel.application
+C:\Users\Josue\desktop\migrarExcel\obj\Debug\migrarExcel.exe.manifest
+C:\Users\Josue\desktop\migrarExcel\obj\Debug\migrarExcel.application
